@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS product (
     sup_id INT NOT NULL,
     prod_name VARCHAR(80) NOT NULL,
     prod_updated_at DATETIME NULL,
+    prod_previous_sup INT NULL,
     PRIMARY KEY (prod_id),
     UNIQUE INDEX fk_product_supplier_idx (prod_name ASC) VISIBLE,
     CONSTRAINT fk_product_supplier
@@ -137,4 +138,22 @@ DELETE FROM sale WHERE (sale_id = 3);
 -- Borrado físico 2
 DELETE FROM sale WHERE (sale_id = 4);
 
--- 4. Modificación de tres productos en nombre u proveedor
+-- 4. Modificación de tres productos en nombre y proveedor
+-- Modificación 1
+UPDATE product SET prod_name = 'Aire acondicionado portatil', 
+    prod_updated_at = now(), prod_previous_sup = (SELECT sup_id 
+    FROM (SELECT sup_id WHERE prod_id = 1) AS x), sup_id = 2 
+    WHERE prod_id = 1;
+
+-- Modificación 2
+UPDATE product SET prod_name = 'Lavadora y secadora', 
+    prod_updated_at = now(), prod_previous_sup = (SELECT sup_id 
+    FROM (SELECT sup_id WHERE prod_id = 2) AS x), sup_id = 5 
+    WHERE prod_id = 2;
+
+-- Modificación 3
+UPDATE product SET prod_name = 'Celular SmartPhone', 
+    prod_updated_at = now(), prod_previous_sup = (SELECT sup_id 
+    FROM (SELECT sup_id WHERE prod_id = 6) AS x), sup_id = 3 
+    WHERE prod_id = 6;
+

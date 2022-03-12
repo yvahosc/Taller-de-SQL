@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS product (
     prod_id INT NOT NULL AUTO_INCREMENT,
     sup_id INT NOT NULL,
     prod_name VARCHAR(80) NOT NULL,
+    prod_updated_at DATETIME NULL,
     PRIMARY KEY (prod_id),
     UNIQUE INDEX fk_product_supplier_idx (prod_name ASC) VISIBLE,
     CONSTRAINT fk_product_supplier
@@ -39,7 +40,7 @@ CREATE TABLE IF NOT EXISTS customer (
 CREATE TABLE IF NOT EXISTS sale (
     sale_id INT NOT NULL AUTO_INCREMENT,
     cust_id INT NOT NULL,
-    sale_elimination_status BOOLEAN NULL DEFAULT 0,
+    sale_deleted_at DATETIME NULL,
     PRIMARY KEY (sale_id),
     UNIQUE INDEX fk_sale_customer1_idx (sale_id ASC) VISIBLE,
     CONSTRAINT fk_sale_customer1
@@ -60,7 +61,7 @@ CREATE TABLE IF NOT EXISTS product_in_sale (
     CONSTRAINT fk_sale_has_product_sale1
         FOREIGN KEY (sale_id)
         REFERENCES sale (sale_id)
-        ON DELETE RESTRICT
+        ON DELETE CASCADE sale_id
         ON UPDATE CASCADE,
     CONSTRAINT fk_sale_has_product_product1
         FOREIGN KEY (prod_id)
@@ -124,6 +125,16 @@ INSERT INTO product_in_sale (sale_id, prod_id, product_quantity_per_sale) VALUES
 
 
 -- 3. Borrados lógicos y físicos de ventas realizadas
+-- Borrado lógico 1
+UPDATE sale SET sale_deleted_at = now() WHERE (sale_id = 2);
 
+-- Borrado lógico 2
+UPDATE sale SET sale_deleted_at = now() WHERE (sale_id = 1);
+
+-- Borrado físico 1
+DELETE FROM sale WHERE (sale_id = 3);
+
+-- Borrado físico 2
+DELETE FROM sale WHERE (sale_id = 4);
 
 -- 4. Modificación de tres productos en nombre u proveedor

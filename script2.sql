@@ -70,4 +70,4 @@ SELECT product.prod_name, supplier.sup_name, product.prod_previous_sup FROM supp
 SELECT product.prod_name, SUM(product_quantity_per_sale) 
 	FROM product_in_sale INNER JOIN product ON product.prod_id = product_in_sale.prod_id
     GROUP BY product.prod_id 
-    ORDER BY product_quantity_per_sale DESC;
+    ORDER BY SUM(product_quantity_per_sale) DESC;

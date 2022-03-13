@@ -101,6 +101,9 @@ INSERT INTO sale (cust_id) VALUES (1);
 INSERT INTO sale (cust_id) VALUES (3);
 INSERT INTO sale (cust_id) VALUES (2);
 INSERT INTO sale (cust_id) VALUES (3);
+INSERT INTO sale (cust_id) VALUES (2);
+INSERT INTO sale (cust_id) VALUES (1);
+INSERT INTO sale (cust_id) VALUES (3);
 
 
 -- Inserción en tabla product_in_sale
@@ -124,6 +127,17 @@ INSERT INTO product_in_sale (sale_id, prod_id, product_quantity_per_sale) VALUES
 INSERT INTO product_in_sale (sale_id, prod_id, product_quantity_per_sale) VALUES (5, 2, 1);
 INSERT INTO product_in_sale (sale_id, prod_id, product_quantity_per_sale) VALUES (5, 4, 1);
 
+-- Venta 6
+INSERT INTO product_in_sale (sale_id, prod_id, product_quantity_per_sale) VALUES (6, 5, 1);
+INSERT INTO product_in_sale (sale_id, prod_id, product_quantity_per_sale) VALUES (6, 4, 1);
+INSERT INTO product_in_sale (sale_id, prod_id, product_quantity_per_sale) VALUES (6, 7, 1);
+
+-- Venta 7
+INSERT INTO product_in_sale (sale_id, prod_id, product_quantity_per_sale) VALUES (7, 3, 4);
+
+-- Venta 8
+INSERT INTO product_in_sale (sale_id, prod_id, product_quantity_per_sale) VALUES (8, 4, 1);
+INSERT INTO product_in_sale (sale_id, prod_id, product_quantity_per_sale) VALUES (8, 6, 2);
 
 -- 3. Borrados lógicos y físicos de ventas realizadas
 -- Borrado lógico 1
@@ -159,4 +173,3 @@ UPDATE product SET prod_name = 'Celular SmartPhone',
     FROM supplier WHERE sup_id = (SELECT sup_id 
     FROM (SELECT sup_id FROM product WHERE prod_id = 6) AS x)), sup_id = 3
     WHERE prod_id = 6;
-

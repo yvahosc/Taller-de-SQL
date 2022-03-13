@@ -67,3 +67,7 @@ SELECT product.prod_name, supplier.sup_name, product.prod_previous_sup FROM supp
     WHERE prod_name = 'Televisor');
 
 -- 3. Consulta de productos más vendidos y las cantidades ordenados de mayor a menor.
+SELECT product.prod_name, SUM(product_quantity_per_sale) 
+	FROM product_in_sale INNER JOIN product ON product.prod_id = product_in_sale.prod_id
+    GROUP BY product.prod_id 
+    ORDER BY product_quantity_per_sale DESC;
